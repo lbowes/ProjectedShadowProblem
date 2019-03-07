@@ -8,6 +8,12 @@ public class Bar
 	
 	public Bar(int left, int height, int right)
 	{
+		if (height < 0)
+		{
+			throw new IllegalArgumentException("Height must be at least zero");
+		}
+		
+		
 		
 	}
 	

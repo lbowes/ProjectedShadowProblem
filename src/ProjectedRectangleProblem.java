@@ -1,9 +1,14 @@
+import java.util.ArrayList;
+
 import internal.Bar;
 import internal.DodgyAlgorithm;
 import internal.Envelop;
 
 class ProjectedRectangleProblem {
 
+	ArrayList inputs = new ArrayList();
+	inputs.add(new Bar());
+	
 	static Envelop result;
 	DodgyAlgorithm solver = new DodgyAlgorithm();
 	
