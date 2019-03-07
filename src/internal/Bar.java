@@ -10,4 +10,19 @@ public class Bar
 	{
 		
 	}
+	
+	public int getLeftBound()
+	{
+		return this.leftBound;
+	}
+	
+	public int getHeight()
+	{
+		return this.height;
+	}
+	
+	public int getRightBound()
+	{
+		return this.rightBound;
+	}
 }
