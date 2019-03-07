@@ -23,17 +23,25 @@ class ProjectedRectangleProblem {
 		
 		
 		// testing console drawing system
-		final Vector canvasSize = new Vector(50, 25);
+		final Vector canvasSize = new Vector(40, 40);
 		ConsoleRasteriser c = new ConsoleRasteriser(canvasSize);
 		
-		c.drawHorizontalLine(new Vector(0, 0), 10, '#');
-		c.drawHorizontalLine(new Vector(10, 9), 10, '%');
-		c.drawHorizontalLine(new Vector(15, 15), 10, '$');
+		// horizontal lines
+		c.drawHorizontalLine(new Vector(0, 0), 100, '%');
+		c.drawHorizontalLine(new Vector(2, 2), 100, '$');
 		
+		// vertical lines
 		c.drawVerticalLine(new Vector(0, 0), 3, 'v');		
-		c.drawVerticalLine(new Vector(13, 0), 90, 'V');
+		c.drawVerticalLine(new Vector(1, 0), 5, 'V');
 		
-		c.print();
+		// points
+		for(int i = 0; i < 8; i++)
+			c.drawPoint(new Vector(i, i), 'X');
+		
+		// text
+		c.addText(new Vector(10, 10), "hellooo, this is a test to see what text input is like, seems to be alright, clipping works");		
+		
+		System.out.println(c);
 		//
 	}
 }
