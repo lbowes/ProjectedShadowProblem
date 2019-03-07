@@ -7,7 +7,7 @@ public class DodgyAlgorithm
 		
 	}
 	
-	public Envelop solve(Bar[] bars)
+	public static Envelop solve(Bar[] bars)
 	{
 		return new Envelop(null);
 	}
