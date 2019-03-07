@@ -1,11 +1,12 @@
+package internal;
 
-public class Envelop 
+public class Bar 
 {
 	private int leftBound;
 	private int height;
 	private int rightBound;
 	
-	public Envelop(int left, int height, int right)
+	public Bar(int left, int height, int right)
 	{
 		
 	}

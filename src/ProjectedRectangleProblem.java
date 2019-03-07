@@ -1,3 +1,4 @@
+
 class ProjectedRectangleProblem {
 
 	public static void main(String[] args) {
