@@ -9,9 +9,6 @@ import internal.Envelop;
 // - Purely functions as a layer on top of internal
 public class Visualisation {
 	
-	// Store the output array (indexed with 2D, but stored in 1D)
-	private String a = "";
-	
 	private ConsoleRasteriser mConsoleRasterizer;
 	
 	Visualisation(Envelop e) { 
@@ -29,6 +26,7 @@ public class Visualisation {
 	{
 		// Uses ConsoleRasteriser functions to draw the output grid
 		// eg. mConsoleRasteriser.drawLine(7, 9, -6) for a line starting at (7, 9) and going 10 spaces down.
+		
 		
 	}
 	
