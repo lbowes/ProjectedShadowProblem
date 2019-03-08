@@ -1,8 +1,9 @@
-package internal;
+package internal.algorithms;
 
 import java.util.ArrayList;
 
-import internal.algorithms.IAlgorithm;
+import internal.Bar;
+import internal.Envelope;
 
 public class DodgyAlgorithm implements IAlgorithm
 {

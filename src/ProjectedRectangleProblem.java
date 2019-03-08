@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 import internal.Bar;
-import internal.DodgyAlgorithm;
 import internal.Envelope;
 
 // temp
 import graphics.Visualisation;
 import internal.Vector;
+import internal.algorithms.DodgyAlgorithm;
 import internal.algorithms.IAlgorithm;
 //
 
