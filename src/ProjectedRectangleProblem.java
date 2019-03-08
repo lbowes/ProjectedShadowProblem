@@ -12,12 +12,13 @@ import internal.algorithms.IAlgorithm;
 
 class ProjectedRectangleProblem {
 	
-	static ArrayList<Bar> testInput;
 	static IAlgorithm solver = new DodgyAlgorithm();
 	
 	public static void main(String[] args) {
 
+		
 		//Adds first example from table 1 to testInput
+		ArrayList<Bar> testInput = new ArrayList<Bar>();
 		testInput.add(new Bar(1, 3, 4));
 		testInput.add(new Bar(2, 4, 5));
 		testInput.add(new Bar(6, 1, 7));

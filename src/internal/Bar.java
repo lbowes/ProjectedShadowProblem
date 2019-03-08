@@ -31,4 +31,9 @@ public class Bar
 	{
 		return this.rightBound;
 	}
+	
+	public String toString()
+	{
+		return "Bar (" + this.leftBound + ", " + this.height + ", " + this.rightBound + ",";
+	}
 }

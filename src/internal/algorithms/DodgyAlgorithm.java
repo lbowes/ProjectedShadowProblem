@@ -23,8 +23,12 @@ public class DodgyAlgorithm implements IAlgorithm
 	}
 
 	@Override
-	public Envelope solve(ArrayList<Bar> barList) {
-		// TODO Auto-generated method stub
+	public Envelope solve(ArrayList<Bar> barList) 
+	{
+		for (int i  = 0; i < barList.size(); i++)
+		{
+			System.out.println(barList.get(i));
+		}
 		return null;
 	}
 
