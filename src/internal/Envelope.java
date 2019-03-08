@@ -6,6 +6,7 @@ public class Envelope
 {
 	ArrayList<Vector> verticesList;
 	
+	
 	public Envelope(ArrayList<Vector> verts)
 	{
 		verticesList = verts;
