@@ -12,8 +12,14 @@ public class Bar
 		{
 			throw new IllegalArgumentException("Height must be at least zero");
 		}
+		if (right < left)
+		{
+			throw new IllegalArgumentException("Right bound must be greater than left bound");
+		}
 		
-		
+		this.leftBound = left;
+		this.height = height;
+		this.rightBound = right;
 		
 	}
 	
@@ -34,6 +40,6 @@ public class Bar
 	
 	public String toString()
 	{
-		return "Bar (" + this.leftBound + ", " + this.height + ", " + this.rightBound + ",";
+		return "Bar (" + this.leftBound + ", " + this.height + ", " + this.rightBound + ")";
 	}
 }
