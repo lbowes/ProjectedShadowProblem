@@ -1,5 +1,7 @@
 package internal;
 
+import java.util.ArrayList;
+
 import internal.algorithms.IAlgorithm;
 
 public class DodgyAlgorithm implements IAlgorithm
@@ -20,7 +22,7 @@ public class DodgyAlgorithm implements IAlgorithm
 	}
 
 	@Override
-	public Envelope solve(Bar[] barList) {
+	public Envelope solve(ArrayList<Bar> barList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,7 +34,7 @@ public class DodgyAlgorithm implements IAlgorithm
 	}
 
 	@Override
-	public Envelope solve(Envelope envelope, Bar[] barList) {
+	public Envelope solve(Envelope envelope, ArrayList<Bar> barList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -42,4 +44,5 @@ public class DodgyAlgorithm implements IAlgorithm
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
