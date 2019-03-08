@@ -1,9 +1,13 @@
 package internal;
 
+import java.util.ArrayList;
+
 public class Envelope 
 {
-	public Envelope(int[] verts)
+	ArrayList<Vector> verticesList;
+	
+	public Envelope(ArrayList<Vector> verts)
 	{
-		
+		verticesList = verts;
 	}
 }
