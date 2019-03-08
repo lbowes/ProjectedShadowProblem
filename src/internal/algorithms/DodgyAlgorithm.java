@@ -17,7 +17,7 @@ public class DodgyAlgorithm implements IAlgorithm
 		return new Envelope(null);
 	}
 	
-	public Envelope barEnvelopUnion(Bar bar, Envelope envelop)
+	public Envelope barEnvelopeUnion(Bar bar, Envelope envelop)
 	{
 		return new Envelope(null);
 	}
@@ -25,11 +25,18 @@ public class DodgyAlgorithm implements IAlgorithm
 	@Override
 	public Envelope solve(ArrayList<Bar> barList) 
 	{
-		for (int i  = 0; i < barList.size(); i++)
+		Envelope outputEnvelope;
+		
+		//Base case
+		outputEnvelope = barsUnion(barList.get(0), barList.get(1));
+		
+		//Recursive case
+		for (int i = 2; i < barList.size(); i++)
 		{
-			System.out.println(barList.get(i));
+			outputEnvelope = barEnvelopeUnion(barList.get(i), outputEnvelope);
 		}
-		return null;
+		
+		return outputEnvelope;
 	}
 
 	@Override
