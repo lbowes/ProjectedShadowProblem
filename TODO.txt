@@ -1,0 +1,15 @@
+.___________.  ______    _______   ______   
+|           | /  __  \  |       \ /  __  \  
+`---|  |----`|  |  |  | |  .--.  |  |  |  | 
+    |  |     |  |  |  | |  |  |  |  |  |  | 
+    |  |     |  `--'  | |  '--'  |  `--'  | 
+    |__|      \______/  |_______/ \______/  
+
+-------------------------------------------
+
+* Complete documentation comments in proper javadoc format
+
+* Draw correct plots and lines on the visualisation, based on the output Envelope result.
+
+* Add labels at regular intervals along the axes, based on the upper bound of the points in the Envelope result.
+                                         

@@ -7,18 +7,18 @@ public class DodgyAlgorithm
 		
 	}
 	
-	public static Envelop solve(Bar[] bars)
+	public static Envelope solve(Bar[] bars)
 	{
-		return new Envelop(null);
+		return new Envelope(null);
 	}
 	
-	public Envelop barsUnion(Bar bar1, Bar bar2)
+	public Envelope barsUnion(Bar bar1, Bar bar2)
 	{
-		return new Envelop(null);
+		return new Envelope(null);
 	}
 	
-	public Envelop barEnvelopUnion(Bar bar, Envelop envelop)
+	public Envelope barEnvelopUnion(Bar bar, Envelope envelop)
 	{
-		return new Envelop(null);
+		return new Envelope(null);
 	}
 }

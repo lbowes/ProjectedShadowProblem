@@ -20,7 +20,7 @@ public class ConsoleRasteriser {
 		
 		// Grid data will be stored internally in 1D, but should be accessed intuitively with x and y 
 		mGrid = new char[mGridDims.x * mGridDims.y];
-		clear('.');
+		clear(' ');
 	}
 	
 	public String toString() {
@@ -37,6 +37,11 @@ public class ConsoleRasteriser {
 		}
 		
 		return output;
+	}
+	
+	public Vector getDims()
+	{
+		return mGridDims;
 	}
 	
 	// ------------------------ DRAWING FUNCTIONS ------------------------
