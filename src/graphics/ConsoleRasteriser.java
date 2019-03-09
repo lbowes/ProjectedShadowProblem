@@ -44,6 +44,10 @@ public class ConsoleRasteriser {
 		return mGridDims;
 	}
 	
+	public Vector getDims_grid() {
+		return toGridSpace(mGridDims);
+	}
+	
 	// ------------------------ DRAWING FUNCTIONS ------------------------
 	public void drawVerticalLine(Vector startPos_grid, int expanse_grid, char newValue) 
 		// expanse_grid is either positive/negative and indicates how far the line goes up or down
@@ -107,10 +111,7 @@ public class ConsoleRasteriser {
 	public void addText(Vector pos_grid, String text)
 	{
 		final Vector startPos_internal = toInternalSpace(pos_grid);
-		if (!withinGrid(startPos_internal)) 
-			throw new IllegalArgumentException("ConsoleRasteriser: addText() tried to draw from point outside grid: (" + pos_grid.x + ", " + pos_grid.y + ")");
-		else if(text.length() > 0)
-		{
+		if (withinGrid(startPos_internal) && text.length() > 0) {
 			final int maxExpanse = Math.min(mGridDims.x, startPos_internal.x + text.length());
 			for(int i = startPos_internal.x; i < maxExpanse; i++) 
 				setPixel(new Vector(i, startPos_internal.y), text.charAt(i - startPos_internal.x));
@@ -125,9 +126,7 @@ public class ConsoleRasteriser {
 		
 	private void setPixel(Vector pos, char newValue) 
 	{
-		if (!withinGrid(pos))
-			throw new IllegalArgumentException("ConsoleRasteriser: setPixel() tried to access point outside grid: (" + pos.x + ", " + pos.y + ")");
-		else
+		if (withinGrid(pos))
 			mGrid[pos.y * mGridDims.x + pos.x] = newValue;
 	}
 	
@@ -153,6 +152,10 @@ public class ConsoleRasteriser {
 		// This function takes in a position in logical grid space, and returns the correct position in the actual array.
 	{
 		return new Vector(pos_grid.x * 2, pos_grid.y);
+	}
+	
+	private Vector toGridSpace(Vector pos_internal) {
+		return new Vector((int)(pos_internal.x / 2.0f), pos_internal.y);
 	}
 	
 }

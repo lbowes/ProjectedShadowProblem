@@ -28,29 +28,70 @@ public class Visualisation {
 	private void assemblePlot(Envelope e) 
 		// Logic for building the output string from the input Envelope 
 	{
+		// Add lines and points
+		// temp - the set of example output points given in first example. This data should eventually come from the Envelope e passed in.
+		ArrayList<Vector> data = new ArrayList<Vector>();
+		data.add(new Vector(1, 11));
+		data.add(new Vector(3, 13));
+		data.add(new Vector(9, 0));
+		data.add(new Vector(12, 7));
+		data.add(new Vector(16, 3));
+		data.add(new Vector(19, 18));
+		data.add(new Vector(22, 3));
+		data.add(new Vector(25, 0));
+		//
+		
+		drawAxes();
+		drawLabels(data);
+		drawEnvelope(data);
+	}
+	
+	private void drawAxes() {
 		// Add axes
-		final Vector origin = new Vector(1, 1);
-		mConsoleRasteriser.drawVerticalLine(new Vector(1, 1),  100,  '.');
-		mConsoleRasteriser.drawHorizontalLine(new Vector(1, 1),  100,  '.');
+		final Vector 
+			origin = new Vector(1, 1),
+			dims_grid = mConsoleRasteriser.getDims_grid();
 		
-		// Add labels
-		mConsoleRasteriser.addText(new Vector(0, 1),  "0");
-		mConsoleRasteriser.addText(new Vector(1, 0),  "0");
+		mConsoleRasteriser.drawVerticalLine(origin,  dims_grid.y,  '.');
+		mConsoleRasteriser.drawHorizontalLine(origin,  dims_grid.x,  '.');
+	}
+	
+	private void drawLabels(ArrayList<Vector> data) {
+		// 1. Compute data bounds
+		final Vector upperBound = calcUpperBound(data);
 		
-		// TODO: Use the number of points in the envelope to find the upper bound on the labels
-		// and add them at regular intervals.
+		// 2. Add labels
+		final Vector dims = mConsoleRasteriser.getDims_grid();
+
+		// TODO: Sometimes the axes do not display a range far enough to include the upper bound points.
+		// Make sure that the upper bound point is always displayed.
+		final int 
+			numLabelsPerAxis = 11,
+			largestDim = Math.max(dims.x, dims.y),
+			labelStepSize = (int)(largestDim / (float)numLabelsPerAxis);
 		
-		// Sine waves
-		for(int i = origin.x + 1; i < mConsoleRasteriser.getDims().x / 2 - 1; i++) 
-		{
-			final Vector a = origin.add(new Vector(i, (int)((Math.sin(i * 0.25) + 1.0) / 0.1)));
-			for(int j = a.y; j > origin.y; j--)
-				mConsoleRasteriser.drawPoint(new Vector(i, j),  '¬');
-			
-			final Vector b = origin.add(new Vector(i, (int)((Math.sin(i * 0.18) + 1.0) / 0.2)));
-			for(int j = b.y; j > origin.y; j--)
-				mConsoleRasteriser.drawPoint(new Vector(i, j),  '2');
+		for(int x = 0; x <= dims.x; x += labelStepSize)
+			mConsoleRasteriser.addText(new Vector(x, 0), Integer.toString((int)((float)x / dims.x * upperBound.x)));
+		
+		for(int y = 0; y <= dims.y; y += labelStepSize)
+			mConsoleRasteriser.addText(new Vector(0, y), Integer.toString((int)((float)y / dims.y * upperBound.y)));
+	}
+	
+	private void drawEnvelope(ArrayList<Vector> data) {
+		// TODO
+	}
+	
+	private Vector calcUpperBound(ArrayList<Vector> data) {
+		Vector upperBound = new Vector(0, 0);
+		
+		for(Vector v : data) {
+			if(v.x >= upperBound.x)
+				upperBound.x = v.x;
+			if(v.y >= upperBound.y)
+				upperBound.y = v.y;
 		}
+		
+		return upperBound;
 	}
 	
 }
