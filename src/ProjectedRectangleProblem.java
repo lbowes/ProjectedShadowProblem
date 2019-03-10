@@ -29,8 +29,8 @@ class ProjectedRectangleProblem {
 		
 		Envelope result = solver.solve(testInput);
 				
-		// 2. Visualise it
-		Visualisation visualisation = new Visualisation(result, new Vector(50, 50));
+		// Present results
+		Visualisation visualisation = new Visualisation(result);
 		System.out.println(visualisation);
 	}
 }

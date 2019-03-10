@@ -7,17 +7,15 @@ import java.util.Arrays;
 // - Bottom left grid position represents (0, 0)
 public class ConsoleRasteriser {
 
-	// Internal state of the grid
+	// Internal state
 	private char[] mGrid;  
 	
 	// Grid dimensions
 	private Vector mGridDims;
 	
-	public ConsoleRasteriser(Vector dims_grid) 
-		// dims should be logical dimensions of grid (ignoring 2x scale factor on x)
-	{
-		mGridDims = toInternalSpace(dims_grid); 
-		
+	public ConsoleRasteriser(Vector dims) {
+		mGridDims = dims;
+				
 		// Grid data will be stored internally in 1D, but should be accessed intuitively with x and y 
 		mGrid = new char[mGridDims.x * mGridDims.y];
 		clear(' ');
@@ -44,77 +42,67 @@ public class ConsoleRasteriser {
 		return mGridDims;
 	}
 	
-	public Vector getDims_grid() {
-		return toGridSpace(mGridDims);
-	}
-	
 	// ------------------------ DRAWING FUNCTIONS ------------------------
-	public void drawVerticalLine(Vector startPos_grid, int expanse_grid, char newValue) 
+	public void drawVerticalLine(Vector startPos, int expanse, char newValue) 
 		// expanse_grid is either positive/negative and indicates how far the line goes up or down
-	{
-		// This class will be responsible for storing the graphical representation, modified from above by Visualisation
-		// Once drawing is completed, the result can be implicitly extracted with toString()
-		
-		final Vector startPos_internal = toInternalSpace(startPos_grid); 
-		if (!withinGrid(startPos_internal)) 
-			throw new IllegalArgumentException("ConsoleRasteriser: drawVerticalLine() tried to draw from point outside grid: (" + startPos_grid.x + ", " + startPos_grid.y + ")");
-		else if(expanse_grid != 0)
+	{		 
+		if (!withinGrid(startPos)) 
+			throw new IllegalArgumentException("ConsoleRasteriser: drawVerticalLine() tried to draw from point outside grid: (" + startPos.x + ", " + startPos.y + ")");
+		else if(expanse != 0)
 		{
 			// line should be drawn down
-			if(expanse_grid < 0) 
+			if(expanse < 0) 
 			{
 				// Line might collide with edge of grid before covering full length
-				final int maxExpanse = Math.max(0, startPos_internal.y - expanse_grid);
-				for(int i = startPos_internal.y; i > maxExpanse; i--) 
-					setPixel(new Vector(startPos_internal.x, i), newValue);
+				final int maxExpanse = Math.max(0, startPos.y - expanse);
+				for(int i = startPos.y; i > maxExpanse; i--) 
+					setPixel(new Vector(startPos.x, i), newValue);
 			}
 			// line should be drawn up
 			else
 			{
-				final int maxExpanse = Math.min(mGridDims.y, startPos_internal.y + expanse_grid);
-				for(int i = startPos_internal.y; i < maxExpanse; i++) 
-					setPixel(new Vector(startPos_internal.x, i), newValue);
+				final int maxExpanse = Math.min(mGridDims.y, startPos.y + expanse);
+				for(int i = startPos.y; i < maxExpanse; i++) 
+					setPixel(new Vector(startPos.x, i), newValue);
 			}
 		}
 	}
 
-	public void drawHorizontalLine(Vector startPos_grid, int expanse_grid, char newValue) 
+	public void drawHorizontalLine(Vector startPos, int expanse, String pattern) 
 		// see drawVerticalLine
 	{
-		final Vector startPos_internal = toInternalSpace(startPos_grid);
-		if (!withinGrid(startPos_internal)) 
-			throw new IllegalArgumentException("ConsoleRasteriser: drawHorizontalLine() tried to draw from point outside grid: (" + startPos_grid.x + ", " + startPos_grid.y + ")");
-		else if(expanse_grid != 0)
+		if (!withinGrid(startPos)) 
+			throw new IllegalArgumentException("ConsoleRasteriser: drawHorizontalLine() tried to draw from point outside grid: (" + startPos.x + ", " + startPos.y + ")");
+		else if(expanse != 0)
 		{
 			// line should be drawn left
-			if(expanse_grid < 0) 
+			if(expanse < 0) 
 			{
 				// Line might collide with edge of grid before covering full length
-				final int maxExpanse = Math.max(0, startPos_internal.x - expanse_grid * 2);
-				for(int i = startPos_internal.x; i > maxExpanse; i -= 2) 
-					setPixel(new Vector(i, startPos_internal.y), newValue);
+				final int maxExpanse = Math.max(0, startPos.x - expanse);
+				for(int i = startPos.x; i > maxExpanse; i--) 
+					setPixel(new Vector(i, startPos.y), pattern.charAt(i % pattern.length()));
 			}
 			// line should be drawn right
 			else
 			{
-				final int maxExpanse = Math.min(mGridDims.x, startPos_internal.x + expanse_grid * 2);
-				for(int i = startPos_internal.x; i < maxExpanse; i += 2) 
-					setPixel(new Vector(i, startPos_internal.y), newValue);
+				final int maxExpanse = Math.min(mGridDims.x, startPos.x + expanse * 2);
+				for(int i = startPos.x; i < maxExpanse; i++) 
+					setPixel(new Vector(i, startPos.y), pattern.charAt(i % pattern.length()));
 			}
 		}
 	}
 
-	public void drawPoint(Vector pos_grid, char newValue) {
-		setPixel(toInternalSpace(pos_grid), newValue);
+	public void drawPoint(Vector pos, char newValue) {
+		setPixel(pos, newValue);
 	}
 
-	public void addText(Vector pos_grid, String text)
+	public void addText(Vector pos, String text)
 	{
-		final Vector startPos_internal = toInternalSpace(pos_grid);
-		if (withinGrid(startPos_internal) && text.length() > 0) {
-			final int maxExpanse = Math.min(mGridDims.x, startPos_internal.x + text.length());
-			for(int i = startPos_internal.x; i < maxExpanse; i++) 
-				setPixel(new Vector(i, startPos_internal.y), text.charAt(i - startPos_internal.x));
+		if (withinGrid(pos) && text.length() > 0) {
+			final int maxExpanse = Math.min(mGridDims.x, pos.x + text.length());
+			for(int i = pos.x; i < maxExpanse; i++) 
+				setPixel(new Vector(i, pos.y), text.charAt(i - pos.x));
 		}
 	}
 	// -------------------------------------------------------------------
@@ -141,21 +129,6 @@ public class ConsoleRasteriser {
 	private boolean withinGrid(Vector query) 
 	{
 		return query.x >= 0 && query.x < mGridDims.x && query.y >= 0 && query.y < mGridDims.y;
-	}
-	
-	private Vector toInternalSpace(Vector pos_grid) 
-		// Each ASCII character is almost twice as high as it is wide.
-		// For the grid to contain positions at regular square intervals, each row must be interleaved with spaces.
-		// e.g. '%%%%%' becomes '% % % % % %'.
-		// This means the size of the implemented grid must be twice as large as it is logically defined to be.
-		// e.g. The width of a (logically) 50x50 grid will be 100.
-		// This function takes in a position in logical grid space, and returns the correct position in the actual array.
-	{
-		return new Vector(pos_grid.x * 2, pos_grid.y);
-	}
-	
-	private Vector toGridSpace(Vector pos_internal) {
-		return new Vector((int)(pos_internal.x / 2.0f), pos_internal.y);
 	}
 	
 }

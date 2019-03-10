@@ -10,11 +10,12 @@ import internal.Envelope;
 // - Purely functions as a layer on top of internal
 public class Visualisation {
 	
-	private ConsoleRasteriser mConsoleRasteriser;
+	private ConsoleRasteriser mConsoleRasteriser; 
+	private Vector mOrigin = new Vector(1, 1);
 	
-	public Visualisation(Envelope data, Vector gridSize) 
+	public Visualisation(Envelope data) 
 	{ 
-		mConsoleRasteriser = new ConsoleRasteriser(gridSize);
+		mConsoleRasteriser = new ConsoleRasteriser(new Vector(100, 50));
 
 		assemblePlot(data);
 	}	
@@ -50,20 +51,17 @@ public class Visualisation {
 		// Add axes
 		final Vector 
 			origin = new Vector(1, 1),
-			dims_grid = mConsoleRasteriser.getDims_grid();
+			dims_grid = mConsoleRasteriser.getDims();
 		
-		mConsoleRasteriser.drawVerticalLine(origin,  dims_grid.y,  '.');
-		mConsoleRasteriser.drawHorizontalLine(origin,  dims_grid.x,  '.');
+		mConsoleRasteriser.drawVerticalLine(origin.add(new Vector(1, 0)),  dims_grid.y, '.');
+		mConsoleRasteriser.drawHorizontalLine(origin,  dims_grid.x,  " .");
 	}
 	
 	private void drawLabels(ArrayList<Vector> data) {
 		final Vector 
 			upperBound = calcUpperBound(data),
-			dims = mConsoleRasteriser.getDims_grid(),
-			origin = new Vector(1, 1);
+			dims = mConsoleRasteriser.getDims();
 
-		// TODO: Sometimes the axes do not display a range far enough to include the upper bound points.
-		// Make sure that the upper bound point is always displayed.
 		final int
 			numLabelsPerAxis = 10,
 			largestDim = (int)((float)Math.max(dims.x, dims.y)),
@@ -71,17 +69,23 @@ public class Visualisation {
 		
 		for(int x = 0; x <= numLabelsPerAxis; x++) {
 			final float percent = (float)((float)x / numLabelsPerAxis);
-			mConsoleRasteriser.addText(new Vector(origin.x + (int)(percent * (dims.x - labelStepSize)), 0), Integer.toString((int)(upperBound.x * percent)));
+			final Vector pos_grid = new Vector(mOrigin.x + (int)(percent * (dims.x - labelStepSize)), 0);
+			mConsoleRasteriser.addText(pos_grid, Integer.toString((int)(upperBound.x * percent)));
+			
+			// 'notches' along bottom axis above numbers
+			if(x > 0)
+				mConsoleRasteriser.drawPoint(pos_grid.add(new Vector(0, 1)), ':');
 		}
 			
 		for(int y = 0; y <= numLabelsPerAxis; y++) {
 			final float percent = (float)((float)y / numLabelsPerAxis);
-			mConsoleRasteriser.addText(new Vector(0, origin.y + (int)(percent * (dims.y - labelStepSize))), Integer.toString((int)(upperBound.y * percent)));
+			mConsoleRasteriser.addText(new Vector(0, mOrigin.y + (int)(percent * (dims.y - labelStepSize))), Integer.toString((int)(upperBound.y * percent)));
 		}
 	}
 	
 	private void drawEnvelope(ArrayList<Vector> data) {
 		// TODO
+		mConsoleRasteriser.drawVerticalLine(new Vector(3, 3), 10, '|');
 	}
 	
 	private Vector calcUpperBound(ArrayList<Vector> data) {
