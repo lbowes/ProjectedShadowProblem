@@ -38,7 +38,7 @@ public class Visualisation {
 		data.add(new Vector(16, 3));
 		data.add(new Vector(19, 18));
 		data.add(new Vector(22, 3));
-		data.add(new Vector(25, 0));
+		data.add(new Vector(25, 0)); //25, 0
 		//
 		
 		drawAxes();
@@ -57,24 +57,27 @@ public class Visualisation {
 	}
 	
 	private void drawLabels(ArrayList<Vector> data) {
-		// 1. Compute data bounds
-		final Vector upperBound = calcUpperBound(data);
-		
-		// 2. Add labels
-		final Vector dims = mConsoleRasteriser.getDims_grid();
+		final Vector 
+			upperBound = calcUpperBound(data),
+			dims = mConsoleRasteriser.getDims_grid(),
+			origin = new Vector(1, 1);
 
 		// TODO: Sometimes the axes do not display a range far enough to include the upper bound points.
 		// Make sure that the upper bound point is always displayed.
-		final int 
-			numLabelsPerAxis = 11,
-			largestDim = Math.max(dims.x, dims.y),
-			labelStepSize = (int)(largestDim / (float)numLabelsPerAxis);
+		final int
+			numLabelsPerAxis = 10,
+			largestDim = (int)((float)Math.max(dims.x, dims.y)),
+			labelStepSize = (int)(Math.floor(largestDim / (float)numLabelsPerAxis));
 		
-		for(int x = 0; x <= dims.x; x += labelStepSize)
-			mConsoleRasteriser.addText(new Vector(x, 0), Integer.toString((int)((float)x / dims.x * upperBound.x)));
-		
-		for(int y = 0; y <= dims.y; y += labelStepSize)
-			mConsoleRasteriser.addText(new Vector(0, y), Integer.toString((int)((float)y / dims.y * upperBound.y)));
+		for(int x = 0; x <= numLabelsPerAxis; x++) {
+			final float percent = (float)((float)x / numLabelsPerAxis);
+			mConsoleRasteriser.addText(new Vector(origin.x + (int)(percent * (dims.x - labelStepSize)), 0), Integer.toString((int)(upperBound.x * percent)));
+		}
+			
+		for(int y = 0; y <= numLabelsPerAxis; y++) {
+			final float percent = (float)((float)y / numLabelsPerAxis);
+			mConsoleRasteriser.addText(new Vector(0, origin.y + (int)(percent * (dims.y - labelStepSize))), Integer.toString((int)(upperBound.y * percent)));
+		}
 	}
 	
 	private void drawEnvelope(ArrayList<Vector> data) {
