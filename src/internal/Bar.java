@@ -12,7 +12,7 @@ public class Bar
 		{
 			throw new IllegalArgumentException("Height must be at least zero");
 		}
-		if (right < left)
+		if (right <= left)
 		{
 			throw new IllegalArgumentException("Right bound must be greater than left bound");
 		}
