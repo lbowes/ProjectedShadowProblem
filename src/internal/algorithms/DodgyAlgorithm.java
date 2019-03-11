@@ -173,9 +173,30 @@ public class DodgyAlgorithm implements IAlgorithm
 		return new Envelope(vertsList);
 	}
 	
-	public Envelope barEnvelopeUnion(Bar bar, Envelope envelop)
+	public Envelope barEnvelopeUnion(Bar bar, Envelope inputEnvelope)
 	{
+		Envelope outputEnvelope;
+		ArrayList<Vector> outputVertsList;
+		int runningHeight = 0;
+		boolean addedLeft = false;
+		boolean addedRight = false;
+		
+		if (bar.getLeftBound() < inputEnvelope.getVertices().get(0).x)
+		{
+			outputEnvelope.
+		}
+		
+		for (int i = 0; i < inputEnvelope.getVertices().size(); i++)
+		{
+			
+		}
+		
 		return new Envelope(null);
+		
+		if ()
+		{
+			
+		}
 	}
 
 	@Override
