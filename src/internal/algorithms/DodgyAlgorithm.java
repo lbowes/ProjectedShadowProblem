@@ -165,7 +165,11 @@ public class DodgyAlgorithm implements IAlgorithm
 					vertsList.add(new Vector(bar1.getRightBound(), 0));
 				}
 			}
-		
+		//Debug
+		for (int i = 0; i < vertsList.size(); i++)
+		{
+			System.out.println(vertsList.get(i));
+		}
 		return new Envelope(vertsList);
 	}
 	
