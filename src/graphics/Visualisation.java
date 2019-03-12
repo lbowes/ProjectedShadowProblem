@@ -42,50 +42,29 @@ public class Visualisation {
 		data.add(new Vector(25, 0)); //25, 0
 		//
 		
-		drawAxes();
-		drawLabels(data);
-		drawEnvelope(data);
+		// TODO:
+		//drawAxes();
+		//drawLabels(data);
+		//drawEnvelope(data);
+		
+		final Vector dims = mConsoleRasteriser.getDims();
+		for(int x = 0; x < dims.x; x++) {
+			for(int y = 0; y < dims.y; y++) {
+				mConsoleRasteriser.drawPoint(new Vector(x, y), '.');
+			}
+		}
 	}
 	
 	private void drawAxes() {
-		// Add axes
-		final Vector 
-			origin = new Vector(1, 1),
-			dims_grid = mConsoleRasteriser.getDims();
-		
-		mConsoleRasteriser.drawVerticalLine(origin.add(new Vector(1, 0)),  dims_grid.y, '.');
-		mConsoleRasteriser.drawHorizontalLine(origin,  dims_grid.x,  " .");
+		// TODO:
 	}
 	
 	private void drawLabels(ArrayList<Vector> data) {
-		final Vector 
-			upperBound = calcUpperBound(data),
-			dims = mConsoleRasteriser.getDims();
-
-		final int
-			numLabelsPerAxis = 10,
-			largestDim = (int)((float)Math.max(dims.x, dims.y)),
-			labelStepSize = (int)(Math.floor(largestDim / (float)numLabelsPerAxis));
 		
-		for(int x = 0; x <= numLabelsPerAxis; x++) {
-			final float percent = (float)((float)x / numLabelsPerAxis);
-			final Vector pos_grid = new Vector(mOrigin.x + (int)(percent * (dims.x - labelStepSize)), 0);
-			mConsoleRasteriser.addText(pos_grid, Integer.toString((int)(upperBound.x * percent)));
-			
-			// 'notches' along bottom axis above numbers
-			if(x > 0)
-				mConsoleRasteriser.drawPoint(pos_grid.add(new Vector(0, 1)), ':');
-		}
-			
-		for(int y = 0; y <= numLabelsPerAxis; y++) {
-			final float percent = (float)((float)y / numLabelsPerAxis);
-			mConsoleRasteriser.addText(new Vector(0, mOrigin.y + (int)(percent * (dims.y - labelStepSize))), Integer.toString((int)(upperBound.y * percent)));
-		}
 	}
 	
 	private void drawEnvelope(ArrayList<Vector> data) {
 		// TODO
-		mConsoleRasteriser.drawVerticalLine(new Vector(3, 3), 10, '|');
 	}
 	
 	private Vector calcUpperBound(ArrayList<Vector> data) {
