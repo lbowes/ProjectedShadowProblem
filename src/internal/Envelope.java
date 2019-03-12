@@ -11,4 +11,9 @@ public class Envelope
 	{
 		verticesList = verts;
 	}
+	
+	public ArrayList<Vector> getVertices()
+	{
+		return this.verticesList;
+	}
 }

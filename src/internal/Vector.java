@@ -31,4 +31,9 @@ public class Vector {
 		return new Vector(this.x * scalar, this.y * scalar);
 	}
 	
+	public String toString()
+	{
+		return "(" + this.x + ", " + this.y + ")";
+	}
+	
 }
