@@ -9,10 +9,7 @@ import internal.Vector;
 public class DodgyAlgorithm implements IAlgorithm
 {
 	
-	public DodgyAlgorithm()
-	{
-		
-	}
+	public DodgyAlgorithm() {}
 	
 	public Envelope barsUnion(Bar bar1, Bar bar2)
 	{
@@ -198,6 +195,7 @@ public class DodgyAlgorithm implements IAlgorithm
 		//Case 2, bar is within envelope nodes
 		for (int i = 0; i < inputEnvelope.getVertices().size() - 1; i++)
 		{
+			System.out.println("Comparing " + inputEnvelope.getVertices().get(i) + " and " + bar);
 			//Case 2.1, left and right bounds are within
 			if (((bar.getLeftBound() >= inputEnvelope.getVertices().get(i).x) && (bar.getLeftBound() < inputEnvelope.getVertices().get(i+1).x)) && (((bar.getRightBound() >= inputEnvelope.getVertices().get(i).x) && (bar.getRightBound() < inputEnvelope.getVertices().get(i+1).x))))
 			{
@@ -294,6 +292,10 @@ public class DodgyAlgorithm implements IAlgorithm
 				if (inputEnvelope.getVertices().get(i).y > runningHeight)
 				{
 					outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, inputEnvelope.getVertices().get(i).y));
+				}
+				else
+				{
+					outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, runningHeight));
 				}
 			}
 		}
