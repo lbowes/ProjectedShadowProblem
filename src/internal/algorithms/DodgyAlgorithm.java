@@ -333,7 +333,7 @@ public class DodgyAlgorithm implements IAlgorithm
 				outputVertsList.add(new Vector(bar.getRightBound(), 0));
 			}
 		}
-		else
+		else if (bar.getRightBound() > inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).x)
 		{
 			if (bar.getHeight() == inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 2).y)
 			{
@@ -346,9 +346,12 @@ public class DodgyAlgorithm implements IAlgorithm
 			}
 			else
 			{
-				outputVertsList.add(new Vector(bar.getLeftBound(), bar.getHeight()));
 				outputVertsList.add(new Vector(bar.getRightBound(), 0));
 			}
+		}
+		else
+		{
+			outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, inputEnvelope.getVertices().get(i).y));
 		}
 		
 		return new Envelope(outputVertsList);
