@@ -10,6 +10,7 @@ public class Envelope
 	public Envelope(ArrayList<Vector> verts)
 	{
 		verticesList = verts;
+		System.out.println(verticesList);
 	}
 	
 	public ArrayList<Vector> getVertices()

@@ -349,7 +349,7 @@ public class DodgyAlgorithm implements IAlgorithm
 			}
 		}
 		
-		return new Envelope(null);
+		return new Envelope(outputVertsList);
 	}
 
 	@Override
