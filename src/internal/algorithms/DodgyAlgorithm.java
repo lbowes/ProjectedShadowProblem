@@ -176,21 +176,21 @@ public class DodgyAlgorithm implements IAlgorithm
 	public Envelope barEnvelopeUnion(Bar bar, Envelope inputEnvelope)
 	{
 		Envelope outputEnvelope;
-		ArrayList<Vector> outputVertsList;
+		ArrayList<Vector> outputVertsList = new ArrayList<Vector>();
 		int runningHeight = 0;
-		boolean addedLeft = false;
-		boolean addedRight = false;
+		//boolean addedLeft = false;
+		//boolean addedRight = false;
 		
 		//Case 1, bar is before all envelope nodes
 		if (bar.getLeftBound() < inputEnvelope.getVertices().get(0).x)
 		{
 			outputVertsList.add(new Vector(bar.getLeftBound(),bar.getHeight()));
-			addedLeft = true;
+			//addedLeft = true;
 			runningHeight = bar.getHeight();
 			if (bar.getRightBound() < inputEnvelope.getVertices().get(0).x)
 			{
 				outputVertsList.add(new Vector(bar.getRightBound(),0));
-				addedRight = true;
+				//addedRight = true;
 				runningHeight = 0;
 			}
 		}
@@ -304,18 +304,49 @@ public class DodgyAlgorithm implements IAlgorithm
 		if (inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).x < bar.getLeftBound())
 		{
 			outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, 0));
+			outputVertsList.add(new Vector(bar.getLeftBound(), bar.getHeight()));
+			outputVertsList.add(new Vector(bar.getRightBound(), 0));
 		}
 		else if (inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).x == bar.getLeftBound())
 		{
-			
+			if (bar.getHeight() == inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			{
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
+			else
+			{
+				outputVertsList.add(new Vector(bar.getLeftBound(), bar.getHeight()));
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
 		}
 		else if (inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).x == bar.getRightBound())
 		{
-			
+			if (bar.getHeight() <= inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			{
+				outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, 0));
+			}
+			else
+			{
+				outputVertsList.add(new Vector(bar.getLeftBound(), bar.getHeight()));
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
 		}
 		else
 		{
-			
+			if (bar.getHeight() == inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			{
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
+			else if (bar.getHeight() < inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			{
+				outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, bar.getHeight()));
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
+			else
+			{
+				outputVertsList.add(new Vector(bar.getLeftBound(), bar.getHeight()));
+				outputVertsList.add(new Vector(bar.getRightBound(), 0));
+			}
 		}
 		
 		return new Envelope(null);
