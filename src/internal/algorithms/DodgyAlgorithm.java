@@ -335,11 +335,11 @@ public class DodgyAlgorithm implements IAlgorithm
 		}
 		else
 		{
-			if (bar.getHeight() == inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			if (bar.getHeight() == inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 2).y)
 			{
 				outputVertsList.add(new Vector(bar.getRightBound(), 0));
 			}
-			else if (bar.getHeight() < inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 1).y)
+			else if (bar.getHeight() < inputEnvelope.getVertices().get(inputEnvelope.getVertices().size() - 2).y)
 			{
 				outputVertsList.add(new Vector(inputEnvelope.getVertices().get(i).x, bar.getHeight()));
 				outputVertsList.add(new Vector(bar.getRightBound(), 0));
