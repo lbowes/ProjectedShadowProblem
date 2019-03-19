@@ -15,8 +15,6 @@ class ProjectedRectangleProblem {
 	static IAlgorithm solver = new DodgyAlgorithm();
 	
 	public static void main(String[] args) {
-
-		
 		//Adds first example from table 1 to testInput
 		ArrayList<Bar> testInput = new ArrayList<Bar>();
 		testInput.add(new Bar(1, 3, 4));
